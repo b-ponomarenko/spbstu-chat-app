@@ -1,0 +1,59 @@
+@import "variables";
+
+/*
+* MARGIN
+*/
+
+@each $suffix, $size in $spacings {
+  .slds-m-top--#{$suffix} {
+    margin-top: $size;
+  }
+};
+
+@each $suffix, $size in $spacings {
+  .slds-m-bottom--#{$suffix} {
+    margin-bottom: $size;
+  }
+};
+
+@each $suffix, $size in $spacings {
+  .slds-m-left--#{$suffix} {
+    margin-left: $size;
+  }
+};
+
+@each $suffix, $size in $spacings {
+  .slds-m-right--#{$suffix} {
+    margin-right: $size;
+  }
+};
+
+
+/*
+* PADDING
+*/
+
+
+@each $suffix, $size in $spacings {
+  .slds-p-top--#{$suffix} {
+    padding-top: $size;
+  }
+};
+
+@each $suffix, $size in $spacings {
+  .slds-p-bottom--#{$suffix} {
+    padding-bottom: $size;
+  }
+};
+
+@each $suffix, $size in $spacings {
+  .slds-p-left--#{$suffix} {
+    padding-left: $size;
+  }
+};
+
+@each $suffix, $size in $spacings {
+  .slds-p-right--#{$suffix} {
+    padding-right: $size;
+  }
+};
