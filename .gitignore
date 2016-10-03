@@ -2,3 +2,4 @@
 server/vendor
 server/composer.lock
 server/DB.db
+node_modules/
