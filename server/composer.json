@@ -1,0 +1,12 @@
+{
+    "name": "bponomarenko/server",
+    "authors": [
+        {
+            "name": "Bogdan Ponomarenko",
+            "email": "ponomarenko.bogdan@yandex.ru"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0"
+    }
+}
