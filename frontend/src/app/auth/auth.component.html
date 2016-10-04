@@ -1,0 +1,13 @@
+<div class="auth-container slds-m-top--medium center-xs">
+  <md-tab-group (selectChange)="transitionToRoute()" [selectedIndex]="currentTabIndex" class="md-tab-group slds-p-bottom--large">
+    <md-tab>
+      <template md-tab-label>Войти</template>
+    </md-tab>
+    <md-tab>
+      <template md-tab-label >Зарегистрироваться</template>
+    </md-tab>
+  </md-tab-group>
+  <div class="start-xs auth-form">
+    <router-outlet></router-outlet>
+  </div>
+</div>

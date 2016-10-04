@@ -3,3 +3,26 @@
   vertical-align: middle;
   font-size: 20px;
 }
+
+md-input {
+  width: 100%;
+}
+
+.md-hint.alert {
+  bottom: -1.3em;
+}
+
+img {
+  max-width: 100%;
+}
+
+.img-circled {
+  border-radius: 50%;
+}
+
+.no-wrap {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
