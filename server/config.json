@@ -1,0 +1,5 @@
+{
+  "DB_CONNECTION_STRING": "mysql:dbname=spbstu-chat;host=localhost:8889",
+  "DB_USER": "root",
+  "DB_PASSWORD": "0000"
+}

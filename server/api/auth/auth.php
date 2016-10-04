@@ -15,8 +15,8 @@ class AuthController
 
   public function login(Request $request, Response $response)
   {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
+//    $name = $request->getAttribute('name');
+    $response->getBody()->write("Hello, login");
 
     return $response;
   }
@@ -24,7 +24,7 @@ class AuthController
   public function signUp(Request $request, Response $response)
   {
     $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
+    $response->getBody()->write("Hello, 'world");
 
     return $response;
   }
