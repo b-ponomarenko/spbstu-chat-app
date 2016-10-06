@@ -1,5 +1,7 @@
 <?php
 
+require 'config.php';
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Interop\Container\ContainerInterface;
@@ -9,12 +11,10 @@ use \Interop\Container\ContainerInterface;
 class DialogController
 {
   protected $ci;
-  private $config;
 
   public function __construct(ContainerInterface $ci)
   {
     $this->ci = $ci;
-    $this->config = json_decode(file_get_contents('config.json'));
   }
 
   public function dialogs(Request $request, Response $response)
@@ -24,9 +24,9 @@ class DialogController
 
     try {
       $dbh  = new PDO(
-        $this -> config -> DB_CONNECTION_STRING,
-        $this -> config -> DB_USER,
-        $this -> config -> DB_PASSWORD
+        DB_CONNECTION_STRING,
+        DB_USER,
+        DB_PASSWORD
       );
 
       $array = array();
@@ -55,9 +55,9 @@ class DialogController
 
     try {
       $dbh  = new PDO(
-        $this -> config -> DB_CONNECTION_STRING,
-        $this -> config -> DB_USER,
-        $this -> config -> DB_PASSWORD
+        DB_CONNECTION_STRING,
+        DB_USER,
+        DB_PASSWORD
       );
 
       $array = array();

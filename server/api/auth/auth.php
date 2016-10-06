@@ -1,8 +1,12 @@
 <?php
 
+require 'config.php';
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Interop\Container\ContainerInterface;
+use \Firebase\JWT\JWT;
+
 
 class AuthController
 {
@@ -15,17 +19,106 @@ class AuthController
 
   public function login(Request $request, Response $response)
   {
-//    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, login");
+    $user = $request -> getParsedBody();
+    $FIND_USER_QUERY = "SELECT Users.email, Users.password FROM Users WHERE email LIKE :email";
 
-    return $response;
+    try {
+      $dbh  = new PDO(
+        DB_CONNECTION_STRING,
+        DB_USER,
+        DB_PASSWORD
+      );
+
+      $sth = $dbh->prepare($FIND_USER_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $sth->execute(array(':email' => $user['email']));
+      $result = $sth -> fetch(PDO::FETCH_ASSOC);
+
+      if ( !$result ) {
+        return $response->withJson([
+          'title' => 'An error occurred',
+          'message' => 'Email address not found!'
+        ], 400);
+      }
+
+      if ( $result['password'] == md5($user['password']) ) {
+        $token = $this -> _generateToken($user);
+        return $response->withJson([ 'token' => $token ]);
+      }
+
+      return $response->withJson([
+        'title' => 'An error occurred',
+        'message' => 'Incorrect password!'
+      ], 400);
+
+
+    } catch (PDOException $e) {
+      $response->getBody()->withJson($e);
+    }
+
   }
 
   public function signUp(Request $request, Response $response)
   {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, 'world");
+    $user = $request -> getParsedBody();
+    $FIND_NEW_USER_EMAIL_QUERY = "SELECT Users.email FROM Users WHERE email LIKE :email";
+
+    try {
+      $dbh  = new PDO(
+        DB_CONNECTION_STRING,
+        DB_USER,
+        DB_PASSWORD
+      );
+
+      $sth = $dbh->prepare($FIND_NEW_USER_EMAIL_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $sth->execute(array(':email' => $user['email']));
+      $result = $sth -> fetch(PDO::FETCH_ASSOC);
+
+      if ( !$result ) {
+        $this -> _addNewUser($dbh, $user);
+        $token = $this -> _generateToken($user);
+        return $response->withJson([ 'token' => $token ]);
+      }
+
+      return $response->withJson([
+        'title' => 'An error occurred',
+        'message' => 'This email address is already in use by another account.'
+      ], 400);
+
+    } catch (PDOException $e) {
+      $response->getBody()->withJson($e);
+    }
 
     return $response;
   }
+
+  private function _generateToken($user) {
+
+    $token = array(
+      'tokenId' => base64_encode(mcrypt_create_iv(32)),
+      'iat' => time(),
+      'nbf'  => time(),
+      'exp'  => time() + 7200,
+      'data' => [
+        'email' => $user['email']
+      ]
+    );
+
+    return JWT::encode($token, JWT_SECRET_KEY);
+
+//    $str = JWT::decode($jwt, JWT_SECRET_KEY, array(ENCODE_ALGORITHM));
+  }
+
+  private function _addNewUser(&$dbh, $user) {
+    $ADD_USER_TO_DB_QUERY = "INSERT `Users` (email, firstName, lastName, role, password) VALUES (:email, :firstName, :lastName, :role, MD5(:password))";
+    $sth = $dbh->prepare($ADD_USER_TO_DB_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute([
+      ':email' => $user['email'],
+      ':firstName' => $user['firstName'],
+      ':lastName' => $user['lastName'],
+      ':role' => USER_ROLE,
+      ':password' => $user['password'],
+    ]);
+    return $sth -> fetch(PDO::FETCH_ASSOC);
+  }
+
 }
