@@ -9,7 +9,13 @@ $config = json_decode(file_get_contents('config.json'));
 
 $app = new \Slim\App;
 
-$container = $app->getContainer();
+$app->add(function ($req, $res, $next) {
+  $response = $next($req, $res);
+  return $response
+    ->withHeader('Access-Control-Allow-Origin', '*')
+    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
   "secret" => JWT_SECRET_KEY,
@@ -22,7 +28,6 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     ], 401);
   }
 ]));
-
 
 $app->post('/auth/sign-up', '\AuthController:signUp');
 

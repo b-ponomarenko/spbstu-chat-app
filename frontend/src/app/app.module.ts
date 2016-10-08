@@ -6,9 +6,13 @@ import {MaterialModule} from "@angular/material";
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {SignUpComponent} from "./auth/sign-up/sign-up.component";
-import {ChatsListComponent} from "./chats-list/chats-list.component";
+import {ChatsListComponent} from "./dialogs/chat-list/chats-list.component";
 import {RoutingModule} from "./app-routing.module";
 import {AuthComponent} from "./auth/auth.component";
+import {AuthService} from "./auth/auth.service";
+import {DialogService} from "./dialogs/dialog.service";
+import {AuthHttpService} from "./shared/auth-http.service";
+import {LogoutComponent} from "./auth/logout/logout.component";
 
 @NgModule({
   declarations: [
@@ -16,7 +20,8 @@ import {AuthComponent} from "./auth/auth.component";
     LoginComponent,
     SignUpComponent,
     ChatsListComponent,
-    AuthComponent
+    AuthComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,7 @@ import {AuthComponent} from "./auth/auth.component";
     RoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthService, DialogService, AuthHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row slds-m-top--medium">
         <div class="col-xs-3"><img src="/assets/polytech_logo.svg" alt=""></div>
-        <div class="col-xs-3 col-xs-offset-6"><button md-raised-button color="accent">Выйти <md-icon>exit_to_app</md-icon></button></div>
+        <div *ngIf="isLoggedIn()" class="col-xs-3 col-xs-offset-6">
+            <button routerLink="auth/logout" md-raised-button color="accent">Выйти <md-icon>exit_to_app</md-icon></button>
+        </div>
     </div>
     <div class="row">
         <router-outlet></router-outlet>

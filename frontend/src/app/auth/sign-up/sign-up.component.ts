@@ -1,36 +1,33 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AuthService} from "../auth.service";
+import {User} from "../../shared/models/User";
+import {FormComponent} from "../form.component";
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent extends FormComponent implements OnInit {
 
-  signUpForm: FormGroup;
-  checkForm: boolean = false;
-
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
-
-  signUpUser() {
-    this.checkForm = true;
-    if ( this.signUpForm.valid ) {
-      // send data to server
-    }
+  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService) {
+    super();
   }
 
-  resetForm() {
-    this.checkForm = false;
-  }
-
-  isInvalidField(isError): boolean {
-    return isError && this.checkForm;
+  sendData({ email, password, firstName, lastName }) {
+    this.authService.signUp(new User( email, password, firstName, lastName ))
+      .subscribe(
+        data => {
+          localStorage.setItem('token', data.token);
+          this.router.navigateByUrl('inbox');
+        }
+      );
   }
 
   ngOnInit() {
-    this.signUpForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.compose([

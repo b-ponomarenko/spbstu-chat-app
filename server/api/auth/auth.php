@@ -2,10 +2,10 @@
 
 require 'config.php';
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use \Interop\Container\ContainerInterface;
-use \Firebase\JWT\JWT;
+use Firebase\JWT\JWT;
+use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 class AuthController
@@ -20,7 +20,7 @@ class AuthController
   public function login(Request $request, Response $response)
   {
     $user = $request -> getParsedBody();
-    $FIND_USER_QUERY = "SELECT Users.email, Users.password FROM Users WHERE email LIKE :email";
+    $FIND_USER_QUERY = "SELECT users.email, users.password FROM users WHERE email LIKE :email";
 
     try {
       $dbh  = new PDO(
@@ -60,7 +60,7 @@ class AuthController
   public function signUp(Request $request, Response $response)
   {
     $user = $request -> getParsedBody();
-    $FIND_NEW_USER_EMAIL_QUERY = "SELECT Users.email FROM Users WHERE email LIKE :email";
+    $FIND_NEW_USER_EMAIL_QUERY = "SELECT users.email FROM users WHERE email LIKE :email";
 
     try {
       $dbh  = new PDO(
@@ -69,6 +69,8 @@ class AuthController
         DB_PASSWORD
       );
 
+      $dbh->exec("SET NAMES utf8");
+
       $sth = $dbh->prepare($FIND_NEW_USER_EMAIL_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
       $sth->execute(array(':email' => $user['email']));
       $result = $sth -> fetch(PDO::FETCH_ASSOC);
@@ -76,7 +78,7 @@ class AuthController
       if ( !$result ) {
         $this -> _addNewUser($dbh, $user);
         $token = $this -> _generateToken($user);
-        return $response->withJson([ 'token' => $token ]);
+        return $response->withJson($this -> _addNewUser($dbh, $user));
       }
 
       return $response->withJson([
@@ -104,12 +106,11 @@ class AuthController
     );
 
     return JWT::encode($token, JWT_SECRET_KEY);
-
-//    $str = JWT::decode($jwt, JWT_SECRET_KEY, array(ENCODE_ALGORITHM));
   }
 
   private function _addNewUser(&$dbh, $user) {
-    $ADD_USER_TO_DB_QUERY = "INSERT `Users` (email, firstName, lastName, role, password) VALUES (:email, :firstName, :lastName, :role, MD5(:password))";
+    $ADD_USER_TO_DB_QUERY = "INSERT `users` (email, firstName, lastName, role, password) VALUES (:email, :firstName, :lastName, :role, MD5(:password));
+    ";
     $sth = $dbh->prepare($ADD_USER_TO_DB_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $sth->execute([
       ':email' => $user['email'],

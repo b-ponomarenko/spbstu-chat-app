@@ -1,1 +1,8 @@
 
+.md-input-suffix {
+  text-align: right;
+
+  & .material-icons {
+    cursor: pointer;
+  }
+}

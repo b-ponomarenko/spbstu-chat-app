@@ -31,6 +31,9 @@ export class AuthComponent implements OnInit {
         break;
       case 'sign-up':
         this.currentTabIndex = 1;
+        break;
+      default:
+        this.currentTabIndex = 0;
     }
   }
 

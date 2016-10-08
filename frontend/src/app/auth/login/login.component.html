@@ -1,13 +1,14 @@
-<form [formGroup]="loginForm" (submit)="loginUser()">
-    <md-input placeholder="Введите ваш email" class="slds-m-bottom--medium" formControlName="email" dividerColor="{{ isInvalidField(loginForm.controls.email.errors) ? 'warn' : 'primary' }}">
+<form [formGroup]="form" (submit)="validateUser()">
+    <md-input placeholder="Введите ваш email" class="slds-m-bottom--medium" formControlName="email" dividerColor="{{ isInvalidField(form.controls.email.errors) ? 'warn' : 'primary' }}">
         <span md-prefix><md-icon>email</md-icon></span>
-        <md-hint *ngIf="isInvalidField(loginForm.controls.email.errors?.required)" class="alert alert-danger slds-p-top--small"><md-icon>info_outline</md-icon>Вы не ввели email</md-hint>
-        <md-hint *ngIf="isInvalidField(loginForm.controls.email.errors?.pattern)" class="alert alert-danger"><md-icon>info_outline</md-icon>Неверный формат email</md-hint>
+        <md-hint *ngIf="isInvalidField(form.controls.email.errors?.required)" class="alert alert-danger slds-p-top--small"><md-icon>info_outline</md-icon>Вы не ввели email</md-hint>
+        <md-hint *ngIf="isInvalidField(form.controls.email.errors?.pattern)" class="alert alert-danger"><md-icon>info_outline</md-icon>Неверный формат email</md-hint>
     </md-input>
-    <md-input placeholder="Введите ваш пароль" type="password" class="slds-m-bottom--medium" formControlName="password" maxlength="32" #passwordCounter dividerColor="{{ isInvalidField(loginForm.controls.password.errors) ? 'warn' : 'primary' }}">
+    <md-input placeholder="Введите ваш пароль" [type]="password" class="slds-m-bottom--medium" formControlName="password" maxlength="32" #passwordCounter dividerColor="{{ isInvalidField(form.controls.password.errors) ? 'warn' : 'primary' }}">
         <span md-prefix><md-icon>lock</md-icon></span>
+        <span md-suffix (mousedown)="showPassword()" (mouseup)="hidePassword()"><md-icon >{{ password == 'password' ? 'visibility' : 'visibility_off' }}</md-icon></span>
         <md-hint align="end">{{passwordCounter.characterCount}} / 32</md-hint>
-        <md-hint *ngIf="isInvalidField(loginForm.controls.password.errors?.required)" class="alert alert-danger"><md-icon>info_outline</md-icon>Введите пароль</md-hint>
+        <md-hint *ngIf="isInvalidField(form.controls.password.errors?.required)" class="alert alert-danger"><md-icon>info_outline</md-icon>Введите пароль</md-hint>
     </md-input>
     <div class="end-xs">
         <button md-raised-button type="reset">Сбросить</button>

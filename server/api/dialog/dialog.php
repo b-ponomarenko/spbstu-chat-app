@@ -2,10 +2,9 @@
 
 require 'config.php';
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use \Interop\Container\ContainerInterface;
-
+use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 class DialogController
@@ -20,7 +19,7 @@ class DialogController
   public function dialogs(Request $request, Response $response)
   {
 
-    $query = 'SELECT Dialogs.dialogName, Dialogs.dialogPicture, Messages.message FROM Dialogs INNER JOIN Messages ON Dialogs.id = Messages.dialog';
+    $GET_ALL_DIALOGS_QUERY = 'SELECT * FROM dialogs';
 
     try {
       $dbh  = new PDO(
@@ -29,21 +28,14 @@ class DialogController
         DB_PASSWORD
       );
 
-      $array = array();
+      $sth = $dbh->prepare($GET_ALL_DIALOGS_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $sth->execute();
+      $result = $sth -> fetchAll(PDO::FETCH_ASSOC);
 
-      foreach ($dbh->query($query) as $row)
-      {
-        array_push($array, array(
-          'dialogName' => $row[0],
-          'dialogPicture' => $row[1],
-          'message' => $row[2]
-        ));
-      }
-
-      return $response->withJson($array);
+      return $response->withJson($result);
 
     } catch (PDOException $e) {
-
+      return $response->withJson($e);
     }
   }
 
