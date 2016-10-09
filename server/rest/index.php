@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
 require 'api/auth/auth.php';
 require 'api/dialog/dialog.php';
-require 'config.php';
+require '../config.php';
 
 $app = new \Slim\App;
 
@@ -17,5 +17,3 @@ $app->get('/api/dialogs', '\DialogController:dialogs');
 
 
 $app->run();
-
-require __DIR__ . '/ws/server.php';

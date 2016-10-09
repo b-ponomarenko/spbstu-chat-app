@@ -1,7 +1,5 @@
 <?php
 
-require 'config.php';
-
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
