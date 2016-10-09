@@ -1,7 +1,5 @@
 <?php
 
-require 'config.php';
-
 use Firebase\JWT\JWT;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;

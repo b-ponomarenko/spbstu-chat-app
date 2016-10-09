@@ -8,6 +8,8 @@
     ],
     "require": {
         "slim/slim": "^3.0",
-        "tuupola/slim-jwt-auth": "^2.3"
+        "tuupola/slim-jwt-auth": "^2.3",
+        "workerman/workerman": "^3.3",
+        "cboden/ratchet": "^0.3.5"
     }
 }

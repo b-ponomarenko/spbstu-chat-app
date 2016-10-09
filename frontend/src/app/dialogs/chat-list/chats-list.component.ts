@@ -23,6 +23,14 @@ export class ChatsListComponent implements OnInit {
       .subscribe(data => {
         this.dialogs = data;
       });
+    const conn = new WebSocket('ws://localhost:5000');
+    conn.onopen = function(e) {
+      console.log(e);
+    };
+
+    conn.onmessage = function(e) {
+      console.log(e);
+    };
   }
 
   showMore() {
