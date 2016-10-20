@@ -76,7 +76,7 @@ class AuthController
       if ( !$result ) {
         $this -> _addNewUser($dbh, $user);
         $token = $this -> _generateToken($user);
-        return $response->withJson($this -> _addNewUser($dbh, $user));
+        return $response->withJson([ 'token' => $token ]);
       }
 
       return $response->withJson([

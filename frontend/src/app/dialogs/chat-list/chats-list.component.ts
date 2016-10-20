@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {DialogService} from "../dialog.service";
 import {IDialog} from "../../shared/models/IDialog";
+import {Input} from "@angular/core/src/metadata/directives";
 
 @Component({
   selector: 'app-chats-list',
@@ -9,7 +10,7 @@ import {IDialog} from "../../shared/models/IDialog";
 })
 export class ChatsListComponent implements OnInit {
 
-  dialogs: IDialog[];
+  @Input() dialogs: IDialog[];
   showedDialogs: number = 4;
 
   constructor(private dialogService: DialogService) { }
@@ -19,19 +20,7 @@ export class ChatsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dialogService.getDialogs()
-      .subscribe(data => {
-        this.dialogs = data;
-      });
-    const conn = new WebSocket('ws://localhost:5000/dialogs');
-    conn.onopen = function(e) {
-      debugger;
-      console.log(e);
-    };
 
-    conn.onmessage = function(e) {
-      console.log(e);
-    };
   }
 
   showMore() {

@@ -7,7 +7,8 @@ import {IDialog} from "../shared/models/IDialog";
 @Injectable()
 export class DialogService {
 
-  constructor(private http: AuthHttpService) { }
+  constructor(private http: AuthHttpService) {
+  }
 
   getDialogs(): Observable<IDialog[]> {
     return this.http.get(`${URL}/api/dialogs`)

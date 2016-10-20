@@ -13,6 +13,9 @@ import {AuthService} from "./auth/auth.service";
 import {DialogService} from "./dialogs/dialog.service";
 import {AuthHttpService} from "./shared/auth-http.service";
 import {LogoutComponent} from "./auth/logout/logout.component";
+import { DialogPageComponent } from './dialogs/dialog-page/dialog-page.component';
+import {DialogResolve} from "./dialogs/dialog.resolver";
+import {SocketService} from "./shared/socket.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import {LogoutComponent} from "./auth/logout/logout.component";
     SignUpComponent,
     ChatsListComponent,
     AuthComponent,
-    LogoutComponent
+    LogoutComponent,
+    DialogPageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,7 @@ import {LogoutComponent} from "./auth/logout/logout.component";
     RoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, DialogService, AuthHttpService],
+  providers: [AuthService, DialogService, DialogResolve, AuthHttpService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

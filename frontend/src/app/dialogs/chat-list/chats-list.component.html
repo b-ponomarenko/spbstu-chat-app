@@ -1,29 +1,24 @@
-<div class="slds-m-top--medium">
-    <div class="row slds-m-bottom--large end-xs">
-        <button md-raised-button color="primary">Создать диалог
-            <md-icon>add_circle_outline</md-icon>
-        </button>
-    </div>
-    <div class="row">
-        <md-card class="slds-m-bottom--x-small row" *ngFor="let dialog of dialogs | slice:0:showedDialogs">
-            <div class="col-xs-2">
-                <img class="img-circled" [src]="dialog.avatar" alt="">
-            </div>
-            <div class="col-xs-10">
-                <md-card-title>{{dialog.title}}</md-card-title>
-                <md-card-content>
-                    <md-card-subtitle>От: Вы</md-card-subtitle>
-                    <p class="no-wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aut autem
-                        beatae culpa fuga, fugit id in ipsum necessitatibus nemo, odit qui quibusdam, quis ratione sed
-                        sit voluptate. Cumque, est!</p>
-                </md-card-content>
-            </div>
-        </md-card>
-        <div class="row center-xs col-xs-12 slds-m-top--medium slds-m-bottom--medium">
-            <div class="row" *ngIf="dialogs">
-                <div class="col-xs-12">
-                    <button md-raised-button color="primary" (click)="showMore()" [disabled]="isShowBtnDisabled()">Показать еще</button>
-                </div>
+<div>
+    <md-card class="slds-m-bottom--x-small row" *ngFor="let dialog of dialogs | slice:0:showedDialogs">
+        <div class="col-xs-2">
+            <img class="img-circled" [src]="dialog.avatar" alt="">
+        </div>
+        <div class="col-xs-10">
+            <md-card-title>{{dialog.title}}</md-card-title>
+            <md-card-content>
+                <md-card-subtitle>От: Вы</md-card-subtitle>
+                <p class="no-wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aut autem
+                    beatae culpa fuga, fugit id in ipsum necessitatibus nemo, odit qui quibusdam, quis ratione sed
+                    sit voluptate. Cumque, est!</p>
+            </md-card-content>
+        </div>
+    </md-card>
+    <div class="row center-xs col-xs-12 slds-m-top--medium slds-m-bottom--medium">
+        <div class="row" *ngIf="dialogs">
+            <div class="col-xs-12">
+                <button md-raised-button color="primary" (click)="showMore()" [disabled]="isShowBtnDisabled()">Показать
+                    еще
+                </button>
             </div>
         </div>
     </div>

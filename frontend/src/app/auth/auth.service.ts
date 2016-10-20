@@ -17,7 +17,7 @@ export class AuthService implements CanActivate {
   }
 
   signUp(user: User) {
-    return this.http.post('http://192.168.0.102:8888/auth/sign-up', user)
+    return this.http.post(`${URL}/auth/sign-up`, user)
       .map(response => response.json())
       .catch(this.handleError);
   }
