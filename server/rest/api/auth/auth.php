@@ -27,6 +27,8 @@ class AuthController
         DB_PASSWORD
       );
 
+      $dbh->exec("SET NAMES utf8");
+
       $sth = $dbh->prepare($FIND_USER_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
       $sth->execute(array(':email' => $user['email']));
       $result = $sth -> fetch(PDO::FETCH_ASSOC);

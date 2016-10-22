@@ -1,5 +1,5 @@
 <div>
-    <md-card class="slds-m-bottom--x-small row" *ngFor="let dialog of dialogs | slice:0:showedDialogs">
+    <md-card [routerLink]="['/dialogs', dialog.id]" class="slds-m-bottom--x-small row" *ngFor="let dialog of dialogs | slice:0:showedDialogs">
         <div class="col-xs-2">
             <img class="img-circled" [src]="dialog.avatar" alt="">
         </div>

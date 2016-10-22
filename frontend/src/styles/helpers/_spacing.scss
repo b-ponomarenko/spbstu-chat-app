@@ -6,25 +6,25 @@
 
 @each $suffix, $size in $spacings {
   .slds-m-top--#{$suffix} {
-    margin-top: $size;
+    margin-top: $size !important;
   }
 };
 
 @each $suffix, $size in $spacings {
   .slds-m-bottom--#{$suffix} {
-    margin-bottom: $size;
+    margin-bottom: $size !important;
   }
 };
 
 @each $suffix, $size in $spacings {
   .slds-m-left--#{$suffix} {
-    margin-left: $size;
+    margin-left: $size !important;
   }
 };
 
 @each $suffix, $size in $spacings {
   .slds-m-right--#{$suffix} {
-    margin-right: $size;
+    margin-right: $size !important;
   }
 };
 
@@ -36,24 +36,24 @@
 
 @each $suffix, $size in $spacings {
   .slds-p-top--#{$suffix} {
-    padding-top: $size;
+    padding-top: $size !important;
   }
 };
 
 @each $suffix, $size in $spacings {
   .slds-p-bottom--#{$suffix} {
-    padding-bottom: $size;
+    padding-bottom: $size !important;
   }
 };
 
 @each $suffix, $size in $spacings {
   .slds-p-left--#{$suffix} {
-    padding-left: $size;
+    padding-left: $size !important;
   }
 };
 
 @each $suffix, $size in $spacings {
   .slds-p-right--#{$suffix} {
-    padding-right: $size;
+    padding-right: $size !important;
   }
 };

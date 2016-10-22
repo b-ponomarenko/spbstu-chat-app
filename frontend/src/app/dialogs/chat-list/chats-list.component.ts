@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {DialogService} from "../dialog.service";
-import {IDialog} from "../../shared/models/IDialog";
+import {IDialog} from "../../shared/interfaces/IDialog";
 import {Input} from "@angular/core/src/metadata/directives";
 
 @Component({

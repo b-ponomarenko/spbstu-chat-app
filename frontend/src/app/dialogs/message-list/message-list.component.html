@@ -1,0 +1,8 @@
+<md-list>
+    <md-list-item *ngFor="let message of messages">
+        <h3 md-line class="slds-m-bottom--x-small"><span class="from">{{message.firstName}} {{message.lastName}}</span> <span class="created">{{message.createdDatetime | date:"H:m"}}</span></h3>
+        <p md-line>
+            {{message.message}}
+        </p>
+    </md-list-item>
+</md-list>

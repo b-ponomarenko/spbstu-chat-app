@@ -13,9 +13,14 @@ import {AuthService} from "./auth/auth.service";
 import {DialogService} from "./dialogs/dialog.service";
 import {AuthHttpService} from "./shared/auth-http.service";
 import {LogoutComponent} from "./auth/logout/logout.component";
+import { DialogsPageComponent } from './dialogs/dialogs-page/dialogs-page.component';
+import {DialogsResolve} from "./dialogs/dialogs.resolver";
+import {SocketService} from "./shared/socket.service";
 import { DialogPageComponent } from './dialogs/dialog-page/dialog-page.component';
 import {DialogResolve} from "./dialogs/dialog.resolver";
-import {SocketService} from "./shared/socket.service";
+import { MessageListComponent } from './dialogs/message-list/message-list.component';
+import { MessageInputComponent } from './dialogs/message-input/message-input.component';
+import { MdTextareaComponent } from './shared/md-textarea/md-textarea.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,11 @@ import {SocketService} from "./shared/socket.service";
     ChatsListComponent,
     AuthComponent,
     LogoutComponent,
-    DialogPageComponent
+    DialogsPageComponent,
+    DialogPageComponent,
+    MessageListComponent,
+    MessageInputComponent,
+    MdTextareaComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +44,7 @@ import {SocketService} from "./shared/socket.service";
     RoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, DialogService, DialogResolve, AuthHttpService, SocketService],
+  providers: [AuthService, DialogService, DialogsResolve, DialogResolve, AuthHttpService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

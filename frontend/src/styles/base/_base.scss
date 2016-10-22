@@ -26,3 +26,7 @@ img {
   white-space: nowrap;
   overflow: hidden;
 }
+
+md-list-item:not(:last-of-type) .md-list-item {
+  border-bottom: 1px solid lightgrey;
+}

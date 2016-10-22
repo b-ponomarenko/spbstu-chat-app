@@ -1,4 +1,4 @@
-export enum Events {
+export enum EventTypes {
   CREATE_DIALOG = 1,
   SEND_MESSAGE,
   TYPING_MESSAGE,

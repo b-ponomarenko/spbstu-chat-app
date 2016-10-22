@@ -1,12 +1,14 @@
-<div class="slds-m-top--medium col-xs-12">
-  <div class="slds-m-bottom--large end-xs slds-p-right--x-small">
-    <button md-raised-button color="primary" (toggle)="showDialog">Создать диалог
-      <md-icon>add_circle_outline</md-icon>
-    </button>
-  </div>
-  <div class="slds-m-bottom--large" >
-    <md-input placeholder="Введите название диалога" [(ngModel)]="dialogName"></md-input>
-    <button md-raised-button color="accent" [disabled]="!dialogName" (click)="createDialog(dialogName)">Сохранить</button>
-  </div>
-  <app-chats-list [dialogs]="dialogs"></app-chats-list>
+<div class="row ">
+    <div class="col-xs-offset-3 col-xs-6">
+        <md-toolbar [color]="'accent'">
+            <span><md-icon>keyboard_arrow_left</md-icon></span>
+            <span>{{dialog.title}}</span>
+        </md-toolbar>
+        <app-message-list [messages]="messages"></app-message-list>
+        <app-message-input></app-message-input>
+    </div>
+    <div class="col-xs-3">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum dolore doloremque expedita, minima
+        natus odio quae saepe ullam voluptatibus. Debitis dolores iure magni nihil omnis qui, sapiente tenetur ut?
+    </div>
 </div>

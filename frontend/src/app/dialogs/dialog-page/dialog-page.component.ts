@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {IDialog} from "../../shared/models/IDialog";
-import {Events} from "../../shared/enums/events";
+import {IDialog} from "../../shared/interfaces/IDialog";
 import {Dialog} from "../../shared/models/Dialog";
-import {SocketService} from "../../shared/socket.service";
+import {IMessage} from "../../shared/interfaces/IMessage";
 
 @Component({
   selector: 'app-dialog-page',
@@ -12,36 +11,15 @@ import {SocketService} from "../../shared/socket.service";
 })
 export class DialogPageComponent implements OnInit {
 
-  dialogs: IDialog[];
+  messages: IMessage[];
+  dialog: IDialog;
 
-  socket;
-
-  constructor(private route: ActivatedRoute, private socketService: SocketService) { }
-
-  createDialog(dialogName) {
-    this.socket.send(JSON.stringify({
-      event: Events.CREATE_DIALOG,
-      data: dialogName
-    }));
-  }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const self = this;
-
-    this.dialogs = this.route.snapshot.data['dialogs'];
-    this.socket = this.socketService.getSocket(this.onSocketMessage.bind(this), this.onOpenSocket.bind(this));
-  }
-
-  onSocketMessage(e) {
-    const data = JSON.parse(e.data);
-    switch (data.event) {
-      case Events.CREATE_DIALOG:
-        this.dialogs.unshift(new Dialog(data.data));
-    }
-  }
-
-  onOpenSocket(e) {
-    console.log(e);
+    const { avatar, title, messages } = this.route.snapshot.data['dialog'];
+    this.dialog = new Dialog(title, avatar);
+    this.messages = messages;
   }
 
 }

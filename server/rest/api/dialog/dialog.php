@@ -17,7 +17,7 @@ class DialogController
   public function dialogs(Request $request, Response $response)
   {
 
-    $GET_ALL_DIALOGS_QUERY = 'SELECT * FROM dialogs';
+    $GET_ALL_DIALOGS_QUERY = 'SELECT * FROM dialogs ORDER BY dialogs.id DESC';
 
     try {
       $dbh  = new PDO(
@@ -25,6 +25,8 @@ class DialogController
         DB_USER,
         DB_PASSWORD
       );
+
+      $dbh->exec("SET NAMES utf8");
 
       $sth = $dbh->prepare($GET_ALL_DIALOGS_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
       $sth->execute();
@@ -40,7 +42,10 @@ class DialogController
   public function dialog(Request $request, Response $response)
   {
     $id = $request->getAttribute('id');
-    $query = "SELECT Dialogs.dialogName, Dialogs.dialogPicture, Messages.message FROM Dialogs INNER JOIN Messages ON Dialogs.id = Messages.dialog WHERE Dialogs.id = $id";
+    $GET_DIALOG_QUERY = "SELECT dialogs.title, dialogs.avatar FROM dialogs  WHERE dialogs.id = :id";
+    $GET_MESSAGES_BY_DIALOG_ID = "SELECT users.firstName, users.lastName, users.email, messages.message, messages.createdDatetime FROM messages INNER JOIN users ON messages.user = users.id WHERE messages.dialog = $id";
+
+    $result = [];
 
 
     try {
@@ -50,18 +55,17 @@ class DialogController
         DB_PASSWORD
       );
 
-      $array = array();
+      $dbh->exec("SET NAMES utf8");
 
-      foreach ($dbh->query($query) as $row)
-      {
-        array_push($array, array(
-          'dialogName' => $row[0],
-          'dialogPicture' => $row[1],
-          'message' => $row[2]
-        ));
-      }
+      $sth = $dbh->prepare($GET_DIALOG_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $sth->execute([':id' => $id]);
+      $result = $sth -> fetch(PDO::FETCH_ASSOC);
 
-      return $response->withJson($array);
+      $sth = $dbh->prepare($GET_MESSAGES_BY_DIALOG_ID, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $sth->execute([':id' => $id]);
+      $result['messages'] = $sth -> fetchAll(PDO::FETCH_ASSOC);
+
+      return $response->withJson($result);
 
     } catch (PDOException $e) {
       return $response->write('Подключение не удалось: ' . $e->getMessage());
