@@ -20,7 +20,6 @@ import { DialogPageComponent } from './dialogs/dialog-page/dialog-page.component
 import {DialogResolve} from "./dialogs/dialog.resolver";
 import { MessageListComponent } from './dialogs/message-list/message-list.component';
 import { MessageInputComponent } from './dialogs/message-input/message-input.component';
-import { MdTextareaComponent } from './shared/md-textarea/md-textarea.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +32,7 @@ import { MdTextareaComponent } from './shared/md-textarea/md-textarea.component'
     DialogsPageComponent,
     DialogPageComponent,
     MessageListComponent,
-    MessageInputComponent,
-    MdTextareaComponent
+    MessageInputComponent
   ],
   imports: [
     BrowserModule,
