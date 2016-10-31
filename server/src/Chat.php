@@ -1,9 +1,9 @@
 <?php
 namespace SPBSTU;
 
+use Firebase\JWT\JWT;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
-use \Firebase\JWT\JWT;
 
 class Chat implements MessageComponentInterface
 {
@@ -24,11 +24,9 @@ class Chat implements MessageComponentInterface
 
   public function onMessage(ConnectionInterface $from, $msg)
   {
-    $numRecv = count($this->clients) - 1;
     $data = json_decode($msg);
-    $decodedToken = JWT::decode($data->token, 'spbstu-chat-app', ['HS256']);
-    echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-      , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+    $decodedToken = JWT::decode($data->token, JWT_SECRET_KEY, [ENCODE_ALGORITHM]);
+    print_r($decodedToken);
 
     foreach ($this->clients as $client) {
       // The sender is not the receiver, send to each client connected

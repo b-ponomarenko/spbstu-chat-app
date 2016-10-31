@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class SocketService {
@@ -19,7 +19,7 @@ export class SocketService {
   }
 
   send(data) {
-    data.token = `Bearer ${localStorage.getItem('token')}`;
+    data.token = localStorage.getItem('token');
     const serializedData = JSON.stringify(data);
     this.socket.send(serializedData);
   }

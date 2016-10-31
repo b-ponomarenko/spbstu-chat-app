@@ -3,6 +3,7 @@
 namespace SPBSTU;
 
 use Exception;
+
 abstract class Enum {
   private $current_val;
 
