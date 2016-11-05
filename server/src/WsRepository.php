@@ -46,8 +46,9 @@ class WsRepository {
       $result = [
         'user' => $user,
         'message' => $data -> data -> message,
-        'createdDatetime' => time(),
-        'event' => EventTypes::SEND_MESSAGE
+        'createdDatetime' => date(DATE_ATOM),
+        'event' => EventTypes::SEND_MESSAGE,
+        'dialog' => $data -> data -> dialog
       ];
 
     } catch (Exception $e) {

@@ -2,13 +2,13 @@ import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import {User} from "../shared/models/User";
 import {Observable} from "rxjs/Observable";
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@angular/router";
 import {URL} from "../config";
 
 @Injectable()
 export class AuthService implements CanActivate {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private router: Router) { }
 
   login(user: User) {
     return this.http.post(`${URL}/auth/login`, user)
@@ -31,7 +31,11 @@ export class AuthService implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return this.isLoggedIn();
+    const isLoggedIn = this.isLoggedIn();
+    if (!isLoggedIn) {
+      this.router.navigateByUrl('/auth/login');
+    }
+    return isLoggedIn
   }
 
   private handleError (error: any) {

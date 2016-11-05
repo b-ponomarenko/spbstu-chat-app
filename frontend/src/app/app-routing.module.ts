@@ -13,12 +13,13 @@ import {DialogResolve} from "./dialogs/dialog.resolver";
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/inbox' },
   { path: 'inbox', component: DialogsPageComponent, resolve: { dialogs: DialogsResolve }, canActivate: [AuthService] },
-  { path: 'dialogs/:id', component: DialogPageComponent, resolve: { dialog: DialogResolve } },
+  { path: 'dialogs/:id', component: DialogPageComponent, resolve: { dialog: DialogResolve }, canActivate: [AuthService] },
   { path: 'auth', component: AuthComponent, children: [
     { path: 'login', component: LoginComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'logout', component: LogoutComponent }
-  ]}
+  ]},
+  { path: '**', pathMatch: 'full', redirectTo: '/auth/login' }
 ];
 
 @NgModule({

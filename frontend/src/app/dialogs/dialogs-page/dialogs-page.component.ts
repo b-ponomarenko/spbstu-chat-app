@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {IDialog} from "../../shared/interfaces/IDialog";
 import {EventTypes} from "../../shared/enums/EventTypes";
@@ -16,7 +16,7 @@ export class DialogsPageComponent implements OnInit {
 
   socket;
 
-  constructor(private route: ActivatedRoute, private socketService: SocketService) { }
+  constructor(private route: ActivatedRoute, private socketService: SocketService) {}
 
   createDialog(dialogName) {
     this.socket.send(JSON.stringify({

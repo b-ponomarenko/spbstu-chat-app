@@ -1,4 +1,10 @@
 
+.message-list {
+  height: 70vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
 .from {
   color: #1565C0;
   font-weight: bold;

@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 
 @Component({
   selector: 'app-message-input',
@@ -19,6 +19,7 @@ export class MessageInputComponent implements OnInit {
 
   sendMessage(message: string): void {
     this.messageSended.emit(message);
+    this.message = null;
   }
 
 }

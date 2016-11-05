@@ -1,7 +1,7 @@
 <div class="row ">
     <div class="col-xs-offset-3 col-xs-6">
         <md-toolbar [color]="'accent'">
-            <span><md-icon>keyboard_arrow_left</md-icon></span>
+            <span><a [routerLink]="['/inbox']"><md-icon>keyboard_arrow_left</md-icon></a></span>
             <span>{{dialog.title}}</span>
         </md-toolbar>
         <app-message-list [messages]="messages"></app-message-list>
