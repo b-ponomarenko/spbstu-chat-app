@@ -4,6 +4,7 @@ use Firebase\JWT\JWT;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Shared\Config as Config;
 
 
 class AuthController
@@ -22,9 +23,9 @@ class AuthController
 
     try {
       $dbh  = new PDO(
-        DB_CONNECTION_STRING,
-        DB_USER,
-        DB_PASSWORD
+        Config::DB_CONNECTION_STRING,
+        Config::DB_USER,
+        Config::DB_PASSWORD
       );
 
       $dbh->exec("SET NAMES utf8");
@@ -64,9 +65,9 @@ class AuthController
 
     try {
       $dbh  = new PDO(
-        DB_CONNECTION_STRING,
-        DB_USER,
-        DB_PASSWORD
+        Config::DB_CONNECTION_STRING,
+        Config::DB_USER,
+        Config::DB_PASSWORD
       );
 
       $dbh->exec("SET NAMES utf8");
@@ -105,7 +106,7 @@ class AuthController
       ]
     );
 
-    return JWT::encode($token, JWT_SECRET_KEY);
+    return JWT::encode($token, Config::JWT_SECRET_KEY);
   }
 
   private function _addNewUser(&$dbh, $user) {
@@ -116,7 +117,7 @@ class AuthController
       ':email' => $user['email'],
       ':firstName' => $user['firstName'],
       ':lastName' => $user['lastName'],
-      ':role' => USER_ROLE,
+      ':role' => Config::USER_ROLE,
       ':password' => $user['password'],
     ]);
     return $sth -> fetch(PDO::FETCH_ASSOC);

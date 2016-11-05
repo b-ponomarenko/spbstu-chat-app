@@ -3,6 +3,7 @@
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Shared\Config as Config;
 
 
 class DialogController
@@ -21,9 +22,9 @@ class DialogController
 
     try {
       $dbh  = new PDO(
-        DB_CONNECTION_STRING,
-        DB_USER,
-        DB_PASSWORD
+        Config::DB_CONNECTION_STRING,
+        Config::DB_USER,
+        Config::DB_PASSWORD
       );
 
       $dbh->exec("SET NAMES utf8");
@@ -43,16 +44,14 @@ class DialogController
   {
     $id = $request->getAttribute('id');
     $GET_DIALOG_QUERY = "SELECT dialogs.title, dialogs.avatar FROM dialogs  WHERE dialogs.id = :id";
-    $GET_MESSAGES_BY_DIALOG_ID = "SELECT users.firstName, users.lastName, users.email, messages.message, messages.createdDatetime FROM messages INNER JOIN users ON messages.user = users.id WHERE messages.dialog = $id";
-
-    $result = [];
+    $GET_MESSAGES_BY_DIALOG_ID = "SELECT users.firstName, users.lastName, users.email, messages.message, messages.createdDatetime FROM messages INNER JOIN users ON messages.user = users.id WHERE messages.dialog = $id ORDER BY messages.id ASC";
 
 
     try {
       $dbh  = new PDO(
-        DB_CONNECTION_STRING,
-        DB_USER,
-        DB_PASSWORD
+        Config::DB_CONNECTION_STRING,
+        Config::DB_USER,
+        Config::DB_PASSWORD
       );
 
       $dbh->exec("SET NAMES utf8");

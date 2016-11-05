@@ -3,7 +3,6 @@
 require 'vendor/autoload.php';
 require 'api/auth/auth.php';
 require 'api/dialog/dialog.php';
-require 'config.php';
 
 $app = new \Slim\App;
 

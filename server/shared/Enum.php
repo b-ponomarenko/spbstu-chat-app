@@ -1,6 +1,6 @@
 <?php
 
-namespace SPBSTU;
+namespace Shared;
 
 use Exception;
 

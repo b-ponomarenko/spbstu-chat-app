@@ -1,5 +1,6 @@
 <?php
 namespace SPBSTU;
+use Shared\Enum as Enum;
 
 class EventTypes extends Enum {
  const CREATE_DIALOG = 1;

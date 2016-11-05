@@ -1,5 +1,7 @@
 <?php
 
+use Shared\Config as Config;
+
 $app->add(function ($req, $res, $next) {
   $response = $next($req, $res);
   return $response
@@ -9,7 +11,7 @@ $app->add(function ($req, $res, $next) {
 });
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
-  "secret" => JWT_SECRET_KEY,
+  "secret" => Config::JWT_SECRET_KEY,
   "path" => '/api',
   "header" => "Authorization",
   "error" => function ($request, $response) {

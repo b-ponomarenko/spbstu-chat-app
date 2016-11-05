@@ -4,6 +4,7 @@ namespace SPBSTU;
 use Firebase\JWT\JWT;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
+use Shared\Config as Config;
 
 class Chat implements MessageComponentInterface
 {
@@ -25,13 +26,22 @@ class Chat implements MessageComponentInterface
   public function onMessage(ConnectionInterface $from, $msg)
   {
     $data = json_decode($msg);
-    $decodedToken = JWT::decode($data->token, JWT_SECRET_KEY, [ENCODE_ALGORITHM]);
-    print_r($decodedToken);
+    $decodedToken = JWT::decode($data->token, Config::JWT_SECRET_KEY, [Config::ENCODE_ALGORITHM]);
+    $userEmail = $decodedToken -> data -> email;
 
-    foreach ($this->clients as $client) {
-      // The sender is not the receiver, send to each client connected
-      $client->send($msg);
+    switch ($data -> event) {
+      case EventTypes::CREATE_DIALOG:
+        WsRepository::createDialogEvent($this -> clients, $data, $userEmail);
+        break;
+      case EventTypes::SEND_MESSAGE:
+        WsRepository::sendMessageEvent($this -> clients, $data, $userEmail);
+        break;
+      case EventTypes::TYPING_MESSAGE:
+        WsRepository::typingMessageEvent($this -> clients, $data, $userEmail);
+        break;
     }
+
+
   }
 
   public function onClose(ConnectionInterface $conn)
