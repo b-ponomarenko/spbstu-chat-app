@@ -61,6 +61,41 @@ class WsRepository {
     }
   }
   static function createDialogEvent($clients, $data, $userEmail) {
+    $CREATE_DIALOG_QUERY = "INSERT `dialogs` (title, avatar) VALUES (:title, :avatar)";
+    $title = $data -> data -> dialogName;
+
+    try {
+      $dbh  = new PDO(
+        Config::DB_CONNECTION_STRING,
+        Config::DB_USER,
+        Config::DB_PASSWORD
+      );
+
+      $dbh->exec("SET NAMES utf8");
+
+      $sth = $dbh->prepare($CREATE_DIALOG_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+      $sth->execute([
+        ':title' => $title,
+        ':avatar' => Config::IMAGE_PLACEHOLDER
+      ]);
+
+      $result = [
+        'event' => EventTypes::CREATE_DIALOG,
+        'dialog' => [
+          'title' => $title,
+          'avatar' => Config::IMAGE_PLACEHOLDER
+        ]
+      ];
+
+    } catch (Exception $e) {
+
+    }
+
+    foreach ($clients as $client) {
+      // The sender is not the receiver, send to each client connected
+      $client->send(json_encode($result), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
 
   }
   static function typingMessageEvent($clients, $data, $userEmail) {

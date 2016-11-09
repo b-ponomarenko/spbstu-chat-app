@@ -27,13 +27,14 @@ class Chat implements MessageComponentInterface
   {
     $data = json_decode($msg);
     $decodedToken = JWT::decode($data->token, Config::JWT_SECRET_KEY, [Config::ENCODE_ALGORITHM]);
-    $userEmail = $decodedToken -> data -> email;
+
 
     switch ($data -> event) {
       case EventTypes::CREATE_DIALOG:
         WsRepository::createDialogEvent($this -> clients, $data, $userEmail);
         break;
       case EventTypes::SEND_MESSAGE:
+        $userEmail = $decodedToken -> data -> email;
         WsRepository::sendMessageEvent($this -> clients, $data, $userEmail);
         break;
       case EventTypes::TYPING_MESSAGE:

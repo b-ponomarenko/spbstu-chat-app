@@ -11,4 +11,6 @@ class Config {
 
   const ADMIN_ROLE = 1;
   const USER_ROLE = 2;
+
+  const IMAGE_PLACEHOLDER = 'http://placehold.it/200X200';
 }
