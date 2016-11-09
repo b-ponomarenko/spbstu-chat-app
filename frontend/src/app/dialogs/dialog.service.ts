@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {URL} from "../config";
+import {URL, REST_PORT} from "../config";
 import {AuthHttpService} from "../shared/auth-http.service";
 import {Observable} from "rxjs";
 import {IDialog} from "../shared/interfaces/IDialog";
@@ -12,13 +12,13 @@ export class DialogService {
   }
 
   getDialogs(): Observable<IDialog[]> {
-    return this.http.get(`${URL}/api/dialogs`)
+    return this.http.get(`http://${URL}${REST_PORT}/api/dialogs`)
       .map(response => response.json())
       .catch(this.handleErrors);
   }
 
   getDialogById(id): Observable<IDialog> {
-    return this.http.get(`${URL}/api/dialogs/${id}`)
+    return this.http.get(`http://${URL}${REST_PORT}/api/dialogs/${id}`)
       .map(response => response.json())
   }
 

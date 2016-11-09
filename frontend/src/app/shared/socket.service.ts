@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {URL, SOCKET_PORT} from "../config";
 
 @Injectable()
 export class SocketService {
@@ -6,12 +7,14 @@ export class SocketService {
   socket: WebSocket;
 
   constructor() {
-    this.socket = new WebSocket('ws://localhost:5000');
+    this.socket = new WebSocket(`ws://${URL}${SOCKET_PORT}`);
   }
 
   getSocket(onMessage, onOpen?, onClose?, onError?) {
     this.socket.onopen = onOpen;
-    this.socket.onmessage = onMessage;
+    this.socket.onmessage = (e) => {
+      onMessage(JSON.parse(e.data));
+    };
     this.socket.onclose = onClose;
     this.socket.onerror = onError;
 

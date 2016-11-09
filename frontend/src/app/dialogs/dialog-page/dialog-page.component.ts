@@ -35,8 +35,7 @@ export class DialogPageComponent implements OnInit, OnDestroy {
     console.log('destroy component');
   }
 
-  onSocketMessage(messageEvent) {
-    const data = JSON.parse(messageEvent.data);
+  onSocketMessage(data) {
     switch (data.event) {
       case EventTypes.SEND_MESSAGE:
         this._pushMessage(data);

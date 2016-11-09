@@ -13,16 +13,20 @@ import {SocketService} from "../../shared/socket.service";
 export class DialogsPageComponent implements OnInit {
 
   dialogs: IDialog[];
+  dialogName: string;
 
   socket;
 
   constructor(private route: ActivatedRoute, private socketService: SocketService) {}
 
   createDialog(dialogName) {
-    this.socket.send(JSON.stringify({
+    this.socketService.send({
       event: EventTypes.CREATE_DIALOG,
-      data: dialogName
-    }));
+      data: {
+        dialogName
+      }
+    });
+    this.dialogName = null;
   }
 
   ngOnInit() {
@@ -30,11 +34,11 @@ export class DialogsPageComponent implements OnInit {
     this.socket = this.socketService.getSocket(this.onSocketMessage.bind(this), this.onOpenSocket.bind(this));
   }
 
-  onSocketMessage(e) {
-    const data = JSON.parse(e.data);
+  onSocketMessage(data) {
+    const { dialog } = data;
     switch (data.event) {
       case EventTypes.CREATE_DIALOG:
-        this.dialogs.unshift(new Dialog(data.data));
+        this.dialogs.unshift(new Dialog(dialog.title, dialog.avatar));
     }
   }
 

@@ -3,7 +3,7 @@ import {Http} from "@angular/http";
 import {User} from "../shared/models/User";
 import {Observable} from "rxjs/Observable";
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@angular/router";
-import {URL} from "../config";
+import {URL, REST_PORT} from "../config";
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -11,13 +11,13 @@ export class AuthService implements CanActivate {
   constructor(private http: Http, private router: Router) { }
 
   login(user: User) {
-    return this.http.post(`${URL}/auth/login`, user)
+    return this.http.post(`http://${URL}${REST_PORT}/auth/login`, user)
       .map(response => response.json())
       .catch(this.handleError);
   }
 
   signUp(user: User) {
-    return this.http.post(`${URL}/auth/sign-up`, user)
+    return this.http.post(`http://${URL}${REST_PORT}/auth/sign-up`, user)
       .map(response => response.json())
       .catch(this.handleError);
   }

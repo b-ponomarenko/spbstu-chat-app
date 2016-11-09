@@ -17,7 +17,6 @@ export class SignUpComponent extends FormComponent implements OnInit {
   }
 
   sendData({ email, password, firstName, lastName }) {
-    debugger;
     this.authService.signUp(new User( email, password, firstName, lastName ))
       .subscribe(
         data => {
