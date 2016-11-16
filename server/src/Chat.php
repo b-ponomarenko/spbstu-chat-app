@@ -20,7 +20,7 @@ class Chat implements MessageComponentInterface
     // Store the new connection to send messages to later
     $this->clients->attach($conn);
 
-    echo "New connection! ({$conn->resourceId})\n";
+    print_r($conn);
   }
 
   public function onMessage(ConnectionInterface $from, $msg)

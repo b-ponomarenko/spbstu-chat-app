@@ -29,6 +29,9 @@ export class DialogPageComponent implements OnInit, OnDestroy {
     this.dialog = new Dialog(title, avatar);
     this.messages = messages;
     this.connection = this.socketService.getSocket(this.onSocketMessage.bind(this));
+    this.socketService.send({
+      event: EventTypes.USER_CONNECTED_TO_DIALOG
+    })
   }
 
   ngOnDestroy(): void {
@@ -40,8 +43,6 @@ export class DialogPageComponent implements OnInit, OnDestroy {
       case EventTypes.SEND_MESSAGE:
         this._pushMessage(data);
         break;
-      case EventTypes.USER_CONNECTED_TO_DIALOG:
-        this._add2Online(data);
     }
   }
 

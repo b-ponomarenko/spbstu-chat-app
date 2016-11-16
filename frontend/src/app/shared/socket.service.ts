@@ -10,7 +10,7 @@ export class SocketService {
     this.socket = new WebSocket(`ws://${URL}${SOCKET_PORT}`);
   }
 
-  getSocket(onMessage, onOpen?, onClose?, onError?) {
+  getSocket(onMessage, onInit?, onOpen?, onClose?, onError?) {
     this.socket.onopen = onOpen;
     this.socket.onmessage = (e) => {
       onMessage(JSON.parse(e.data));

@@ -38,7 +38,7 @@ export class DialogsPageComponent implements OnInit {
     const { dialog } = data;
     switch (data.event) {
       case EventTypes.CREATE_DIALOG:
-        this.dialogs.unshift(new Dialog(dialog.title, dialog.avatar));
+        this.dialogs.unshift(new Dialog(dialog.title, dialog.avatar, dialog.id));
     }
   }
 

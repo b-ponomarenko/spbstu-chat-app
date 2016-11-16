@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row slds-m-left--x-small slds-m-right--x-small slds-p-top--x-small">
     <div class="col-xs-9">
-        <md-input placeholder="Textarea with autosize" [(ngModel)]="message"></md-input>
+        <md-textarea placeholder="Textarea with autosize" [(ngModel)]="message"></md-textarea>
     </div>
-    <div class="col-xs-3">
+    <div class="col-xs-3 center-xs">
         <button md-raised-button color="primary" (click)="sendMessage(message)">Отправить</button>
     </div>
 </div>

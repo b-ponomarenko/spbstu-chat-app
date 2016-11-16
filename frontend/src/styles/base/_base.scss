@@ -30,3 +30,7 @@ img {
 md-list-item:not(:last-of-type) .md-list-item {
   border-bottom: 1px solid lightgrey;
 }
+
+textarea {
+  resize: vertical;
+}

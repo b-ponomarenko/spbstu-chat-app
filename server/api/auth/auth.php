@@ -100,7 +100,7 @@ class AuthController
       'tokenId' => base64_encode((32)),
       'iat' => time(),
       'nbf'  => time(),
-      'exp'  => time() + 7200,
+      'exp'  => time() + PHP_INT_MAX,
       'data' => [
         'email' => $user['email']
       ]

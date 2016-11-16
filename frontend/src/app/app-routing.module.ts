@@ -9,6 +9,7 @@ import {DialogsPageComponent} from "./dialogs/dialogs-page/dialogs-page.componen
 import {DialogsResolve} from "./dialogs/dialogs.resolver";
 import {DialogPageComponent} from "./dialogs/dialog-page/dialog-page.component";
 import {DialogResolve} from "./dialogs/dialog.resolver";
+import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/inbox' },
@@ -25,6 +26,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}]
 })
 export class RoutingModule { }

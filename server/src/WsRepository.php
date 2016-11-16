@@ -43,6 +43,7 @@ class WsRepository {
         ':message' => $data -> data -> message
       ]);
 
+
       $result = [
         'user' => $user,
         'message' => $data -> data -> message,
@@ -73,18 +74,20 @@ class WsRepository {
 
       $dbh->exec("SET NAMES utf8");
 
-      $sth = $dbh->prepare($CREATE_DIALOG_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $sth = $dbh->prepare($CREATE_DIALOG_QUERY, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
       $sth->execute([
         ':title' => $title,
         ':avatar' => Config::IMAGE_PLACEHOLDER
       ]);
+      $dialog = $sth -> fetch(PDO::FETCH_ASSOC);
 
       $result = [
         'event' => EventTypes::CREATE_DIALOG,
         'dialog' => [
           'title' => $title,
-          'avatar' => Config::IMAGE_PLACEHOLDER
+          'avatar' => Config::IMAGE_PLACEHOLDER,
+          'id' => (int) $dbh -> lastInsertId()
         ]
       ];
 
@@ -99,6 +102,9 @@ class WsRepository {
 
   }
   static function typingMessageEvent($clients, $data, $userEmail) {
+
+  }
+  static function joinToApp($clients) {
 
   }
 }

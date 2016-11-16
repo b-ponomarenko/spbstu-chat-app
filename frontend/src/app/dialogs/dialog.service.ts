@@ -20,6 +20,7 @@ export class DialogService {
   getDialogById(id): Observable<IDialog> {
     return this.http.get(`http://${URL}${REST_PORT}/api/dialogs/${id}`)
       .map(response => response.json())
+      .catch(this.handleErrors);
   }
 
   handleErrors(error: any) {

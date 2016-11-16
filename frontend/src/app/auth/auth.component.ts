@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +11,7 @@ export class AuthComponent implements OnInit {
 
   currentTabIndex: number;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   transitionToRoute() {
     const currentUrl = this.router.url.split('/').pop();
@@ -25,6 +26,9 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     const currentUrl = this.router.url.split('/').pop();
+    if ( this.authService.isLoggedIn() ) {
+      this.router.navigateByUrl('/inbox');
+    }
     switch (currentUrl) {
       case 'login':
         this.currentTabIndex = 0;

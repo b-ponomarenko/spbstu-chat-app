@@ -14,3 +14,8 @@
 .created {
   color: #9E9E9E;
 }
+
+p[md-line] {
+  overflow-x: visible;
+  white-space: normal;
+}
