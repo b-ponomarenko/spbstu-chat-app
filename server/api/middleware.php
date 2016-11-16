@@ -14,6 +14,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
   "secret" => Config::JWT_SECRET_KEY,
   "path" => '/api',
   "header" => "Authorization",
+  "secure" => false,
   "error" => function ($request, $response) {
     return $response -> withJson([
       'title' => 'Authentication error',
