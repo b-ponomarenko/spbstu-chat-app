@@ -3,6 +3,9 @@
 namespace Shared;
 
 class Config {
+//  const DB_CONNECTION_STRING = 'mysql:dbname=cm34648_chat;host=localhost';
+//  const DB_USER = 'cm34648_chat';
+//  const DB_PASSWORD = 'chat';
   const DB_CONNECTION_STRING = 'mysql:dbname=spbstu-chat;host=localhost:8889';
   const DB_USER = 'root';
   const DB_PASSWORD = 'root';

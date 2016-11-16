@@ -97,7 +97,7 @@ class AuthController
   private function _generateToken($user) {
 
     $token = array(
-      'tokenId' => base64_encode(mcrypt_create_iv(32)),
+      'tokenId' => base64_encode((32)),
       'iat' => time(),
       'nbf'  => time(),
       'exp'  => time() + 7200,
