@@ -33,6 +33,18 @@ class DialogController
       $sth->execute();
       $result = $sth -> fetchAll(PDO::FETCH_ASSOC);
 
+      foreach ($result as &$dialog) {
+        $GET_LAST_MESSAGE_IN_DIALOG = "SELECT dialogs.id, messages.message, users.firstName, users.lastName FROM dialogs
+              INNER JOIN messages ON dialogs.id = messages.dialog
+              INNER JOIN users ON users.id = messages.user
+            WHERE dialogs.id = :id AND messages.id=(SELECT MAX(id) FROM messages WHERE messages.dialog = :id);";
+        $sth = $dbh->prepare($GET_LAST_MESSAGE_IN_DIALOG, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth->execute([':id' => $dialog['id']]);
+        $dialog['lastMessage'] = $sth -> fetch(PDO::FETCH_ASSOC);
+
+      }
+
+
       return $response->withJson($result);
 
     } catch (PDOException $e) {

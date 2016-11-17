@@ -6,10 +6,8 @@
         <div class="col-xs-10">
             <md-card-title>{{dialog.title}}</md-card-title>
             <md-card-content>
-                <md-card-subtitle>От: Вы</md-card-subtitle>
-                <p class="no-wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aut autem
-                    beatae culpa fuga, fugit id in ipsum necessitatibus nemo, odit qui quibusdam, quis ratione sed
-                    sit voluptate. Cumque, est!</p>
+                <md-card-subtitle>От: {{dialog.lastMessage.firstName}} {{dialog.lastMessage.lastName}}</md-card-subtitle>
+                <p class="no-wrap">{{dialog.lastMessage.message}}</p>
             </md-card-content>
         </div>
     </md-card>

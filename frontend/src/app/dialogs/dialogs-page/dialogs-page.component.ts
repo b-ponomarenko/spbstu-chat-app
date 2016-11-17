@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {IDialog} from "../../shared/interfaces/IDialog";
 import {EventTypes} from "../../shared/enums/EventTypes";
 import {Dialog} from "../../shared/models/Dialog";
 import {SocketService} from "../../shared/socket.service";
@@ -12,8 +11,9 @@ import {SocketService} from "../../shared/socket.service";
 })
 export class DialogsPageComponent implements OnInit {
 
-  dialogs: IDialog[];
+  dialogs: Dialog[];
   dialogName: string;
+  isShowDialogInput: boolean = false;
 
   socket;
 
@@ -27,6 +27,11 @@ export class DialogsPageComponent implements OnInit {
       }
     });
     this.dialogName = null;
+    this.toggleDialogInput();
+  }
+
+  toggleDialogInput() {
+    this.isShowDialogInput = !this.isShowDialogInput;
   }
 
   ngOnInit() {
@@ -39,7 +44,19 @@ export class DialogsPageComponent implements OnInit {
     switch (data.event) {
       case EventTypes.CREATE_DIALOG:
         this.dialogs.unshift(new Dialog(dialog.title, dialog.avatar, dialog.id));
+        break;
+      case EventTypes.SEND_MESSAGE:
+        this.setLastDialogMessage(data);
+        break;
     }
+  }
+
+  setLastDialogMessage(data) {
+    const dialog = this.dialogs.find((dialog) => dialog.id == data.dialog);
+    dialog.lastMessage.message = data.message;
+    dialog.lastMessage.firstName = data.user.firstName;
+    dialog.lastMessage.lastName = data.user.lastName;
+    dialog.lastMessage.id = data.user.id;
   }
 
   onOpenSocket(e) {
